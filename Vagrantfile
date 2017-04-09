@@ -8,7 +8,10 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "ci" do |ci|
-    ci.vm.provision "provision_ci", type: "shell", path: "bootstrap_ci.sh", privileged: false
+    # setup git ssh keys
+    ci.vm.provision "provision_ssh", type: "file", source: "vagrant_setup/vagrant_git.pub", destination: "/tmp/vagrant_git.pub"
+    #ci.vm.provision "shell", inline: "cat ~/.ssh/id_rsagit.pub >> ~/.ssh/authorized_keys"
+    ci.vm.provision "provision_ci", type: "shell", path: "vagrant_setup/bootstrap_ci.sh", privileged: false
 
     ci.vm.network :private_network, ip: "10.10.10.100"
     ci.vm.network "forwarded_port", guest: 8080, host: 8082
@@ -23,7 +26,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "system" do |system|
     system.vm.box = "ubuntu/trusty64"
-    system.vm.provision "provision_system", type: "shell", path: "bootstrap_system.sh"
+    system.vm.provision "provision_system", type: "shell", path: "vagrant_setup/bootstrap_system.sh"
     system.vm.network :private_network, ip: "10.10.10.10"
 
     system.vm.provider :virtualbox do |v|
@@ -35,7 +38,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "framework" do |framework|
     framework.vm.box = "ubuntu/trusty64"
-    framework.vm.provision "provision_framework", type: "shell", path: "bootstrap_framework.sh"
+    framework.vm.provision "provision_framework", type: "shell", path: "vagrant_setup/bootstrap_framework.sh"
 
     framework.vm.network :private_network, ip: "10.10.10.20"
 
