@@ -7,10 +7,10 @@ sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sour
 sudo apt-get update 
 sudo apt-get -y install jenkins
 sudo service jenkins start
-sudo chkconfig jenkins on
+sudo update-rc.d jenkins enable 2
 
 echo "Initial admin pwd: "
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 echo "Installing jenkins plugins"
-sudo java -jar $JENKINS_JAR -s http://127.0.0.1:8082/ install-plugin git
+#sudo java -jar $JENKINS_JAR -s http://127.0.0.1:8080/ install-plugin git

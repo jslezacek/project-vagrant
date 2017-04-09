@@ -1,2 +1,5 @@
-/logs
-/.vagrant
+logs
+.vagrant
+target
+.idea
+project.iml
