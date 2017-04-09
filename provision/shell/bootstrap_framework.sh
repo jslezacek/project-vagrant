@@ -1,5 +1,5 @@
-sudo apt-get update 
-sudo apt-get -y install openjdk-7-jre scala maven
+sudo apt-get update > /dev/null 2>&1
+sudo apt-get -y install openjdk-7-jre scala maven > /dev/null 2>&1
 
 # setup /etc/hosts
 sudo hostname framework 
