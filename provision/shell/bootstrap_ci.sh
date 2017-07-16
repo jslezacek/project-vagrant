@@ -5,7 +5,7 @@ JENKINS_JAR="/var/cache/jenkins/war/WEB-INF/jenkins-cli.jar"
 wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
 sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 sudo apt-get update > /dev/null 2>&1
-sudo apt-get -y install git maven openjdk-7-jre jenkins curl > /dev/null 2>&1
+sudo apt-get -y install git maven openjdk-7-jdk jenkins curl > /dev/null 2>&1
 sudo service jenkins start
 sudo update-rc.d jenkins enable 2 > /dev/null 2>&1
 
