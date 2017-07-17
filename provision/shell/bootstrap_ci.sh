@@ -10,6 +10,8 @@ sudo service jenkins start
 sudo update-rc.d jenkins enable 2 > /dev/null 2>&1
 
 # admin pwd for jenkins
+# mvn --encrypt-master-password <>
+# .m2/settings-security.xml
 #echo "Installing jenkins plugins"
 #sudo java -jar $JENKINS_JAR -s http://127.0.0.1:8080/ install-plugin git
 

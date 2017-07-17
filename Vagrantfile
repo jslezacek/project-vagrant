@@ -16,20 +16,20 @@ Vagrant.configure("2") do |config|
     ci.vm.network :private_network, ip: "10.10.10.100"
     ci.vm.network "forwarded_port", guest: 8080, host: 8082
     ci.vm.network "forwarded_port", guest: 80, host: 80
-#    ci.vm.network "forwarded_port", guest: 2299, host: 2299
-#    ci.vm.network "forwarded_port", guest: 8089, host: 8089
+    ci.vm.network "forwarded_port", guest: 8081, host: 8081
 
     ci.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       v.customize ["modifyvm", :id, "--memory", 2048]
       v.customize ["modifyvm", :id, "--name", "ci"]
     end
-
-#    ci.vm.provision "docker" do |d| 
-#      d.pull_images "gitlab/gitlab-ce:latest"
-#      d.run "gitlab/gitlab-ce:latest",
-#        args: "-d -p 8089:80 -p 2299:22 --name gitlab --restart always --volume /srv/gitlab/config:/etc/gitlab"
-#    end
+    
+# docker nexus3
+    ci.vm.provision "docker" do |d| 
+      d.pull_images "sonatype/nexus3:latest"
+      d.run "sonatype/nexus3",
+        args: "-d -p 8081:8081 -e JAVA_MAX_HEAP=756m"
+    end
   end
 
   config.vm.define "system" do |system|
@@ -65,5 +65,4 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--name", "framework"]
     end
   end
-
 end
