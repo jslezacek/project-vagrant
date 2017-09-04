@@ -57,11 +57,19 @@ Vagrant.configure("2") do |config|
     framework.vm.box = "ubuntu/trusty64"
     framework.vm.provision "provision_framework", type: "shell", path: "provision/shell/bootstrap_framework.sh"
 
+    framework.vm.provision "docker" do |d|
+      d.pull_images "spotify/kafka"
+      d.run "spotify/kafka",
+        args: "-d -p 2181:2181 -p 9092:9092 --env TOPICS=test --env ADVERTISED_PORT=9092 --env ADVERTISED_HOST=10.10.10.20"
+    end
+
     framework.vm.network :private_network, ip: "10.10.10.20"
+    framework.vm.network "forwarded_port", guest: 2181, host: 2181
+    framework.vm.network "forwarded_port", guest: 9092, host: 9092
 
     framework.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--memory", 512]
+      v.customize ["modifyvm", :id, "--memory", 2048]
       v.customize ["modifyvm", :id, "--name", "framework"]
     end
   end
