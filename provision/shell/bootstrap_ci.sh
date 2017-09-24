@@ -27,7 +27,7 @@ echo "You can run: git remote add vagrant ssh://git@localhost:2222"
 #curl -L http://www.sonatype.org/downloads/nexus-latest-bundle.zip -o nexus-latest-bundle.zip
 
 # setup /etc/hosts
-sudo hostname ci
+sudo echo "ci" > /etc/hostname
 sudo bash -c 'cat >> /etc/hosts <<EOF
 10.10.10.100 ci
 10.10.10.10 system
